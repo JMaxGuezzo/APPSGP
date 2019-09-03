@@ -9,7 +9,7 @@ const sequelize = new Sequelize(null, null, null, {
     }
 });
 
-const Usuario = sequelize.define('usuario', {
+const Fiel = sequelize.define('fiel', {
     id: {
         primaryKey: true,
         type: Sequelize.BIGINT,
@@ -18,17 +18,7 @@ const Usuario = sequelize.define('usuario', {
       nome: {
         type: Sequelize.STRING(200),
         allowNull: false,
-      },
-      nascimento: Sequelize.DATEONLY,
-      email: {
-        type: Sequelize.STRING(200),
-        allowNull: false,
-        unique: true,
-      },
-      senha: {
-        type: Sequelize.STRING(200),
-        allowNull: false,
-      }
+      },     
 });
 
 const Tarefa = sequelize.define('tarefa', {
@@ -48,16 +38,76 @@ const Tarefa = sequelize.define('tarefa', {
       concluido: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+      
       }
-})
+    });
+const Comunidade = sequelize.define('comunidade', {
+        id: {
+            primaryKey: true,
+            type: Sequelize.BIGINT,
+            autoIncrement: true,
+          },
+          nome: {
+            type: Sequelize.STRING(500),
+            allowNull: false,
+          },
+        });
 
-Usuario.hasMany(Tarefa, {
+const Ceb = sequelize.define('ceb', {
+          id: {
+              primaryKey: true,
+              type: Sequelize.BIGINT,
+              autoIncrement: true,
+            },
+            nome: {
+              type: Sequelize.STRING(500),
+              allowNull: false,
+            }
+          });
+const Civil = sequelize.define('civil', {
+            id: {
+                primaryKey: true,
+                type: Sequelize.BIGINT,
+                autoIncrement: true,
+              },
+              nome: {
+                type: Sequelize.STRING(500),
+                allowNull: false,
+              },
+            });
+const Estado = sequelize.define('estado', {
+              id: {
+                  primaryKey: true,
+                  type: Sequelize.BIGINT,
+                  autoIncrement: true,
+                },
+                nome: {
+                  type: Sequelize.STRING(500),
+                  allowNull: false,
+                },
+              });
+const Cidade = sequelize.define('cidade', {
+                id: {
+                    primaryKey: true,
+                    type: Sequelize.BIGINT,
+                    autoIncrement: true,
+                  },
+                  nome: {
+                    type: Sequelize.STRING(500),
+                    allowNull: false,
+                  },
+                });
 
-})
-Tarefa.belongsTo(Usuario)
+Comunidade.hasMany(Ceb);
+Ceb.belongsTo(Comunidade);
 
 module.exports = {
     sequelize,
-    Usuario,
+    Fiel,
     Tarefa,
+    Comunidade,
+    Ceb,
+    Civil,
+    Estado,
+    Cidade
 };

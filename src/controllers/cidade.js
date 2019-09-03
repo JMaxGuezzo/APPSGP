@@ -1,17 +1,15 @@
-const { Usuario } = require('../models/index')
+const { Cidade } = require('../models/index')
 
 function cadastro(request, response, next) {
-    const usuario = request.body;
-    Usuario.create({
-      nome: usuario.nome,
-      email: usuario.email,
-      nascimento: usuario.nascimento,
-      senha: usuario.senha, // estudar sobre hash de senha com bcrypt
+    const cidade = request.body;
+    Cidade.create({
+      nome: cidade.nome
+       // estudar sobre hash de senha com bcrypt
     })
-      .then(function (usuarioCriado) {
+      .then(function (cidadeCriado) {
         // usuário inserido com sucesso
-        delete usuarioCriado.senha;
-        response.status(201).json(usuarioCriado)
+        delete cidadeCriado.senha;
+        response.status(201).json(cidadeCriado)
       })
       .catch(function (error) {
         // falha ao inserior o usuário
@@ -27,14 +25,29 @@ function cadastro(request, response, next) {
       })
 }
 
+function listagem(request, response, next) {
+    
+  Cidade.findAll({
+      attributes: ['id', 'nome'],
+      
+    })
+      .then(function (cidade) {
+        response.status(200).json(cidade)
+      })
+      .catch(function (error) {
+        console.log(error)
+        response.status(422).send()
+      })
+    };
+
+
 function buscaPorId(request, response, next) {
-  const usuarioId = request.params.usuarioId
-  Usuario.findByPk(usuarioId)
-    .then(function (usuario) {
-      if (usuario) {
-        const usuarioJson = usuario.toJSON()
-        delete usuarioJson.senha
-        response.status(200).json(usuarioJson)
+  const cidadeId = request.params.cidadeId
+  Cidade.findByPk(cidadeId)
+    .then(function (cidade) {
+      if (cidade) {
+        const cidadeJson = cidade.toJSON()
+        response.status(200).json(cidadeJson)
       } else {
         response.status(404).send()
       }
@@ -45,23 +58,18 @@ function buscaPorId(request, response, next) {
     })
 };
 
-
 function edicao(request, response, next) {
-  const usuarioId = request.params.usuarioId
+  const cidadeId = request.params.cidadeId
   const body = request.body
-  Usuario.findByPk(usuarioId)
-    .then(function (usuario) {
-      if (usuario) {
-        return usuario.update({
+  Cidade.findByPk(cidadeId)
+    .then(function (cidade) {
+      if (cidade) {
+        return cidade.update({
           nome: body.nome,
-          email: body.email,
-          nascimento: body.nascimento,
-          senha: body.senha, // criar uma específica para alterar a senha
         })
-          .then(function (usuarioAtualizado) {
-            const usuarioJson = usuarioAtualizado.toJSON()
-            delete usuarioJson.senha
-            response.status(200).json(usuarioJson)
+          .then(function (cidadeAtualizado) {
+            const cidadeJson = cidadeAtualizado.toJSON()
+            response.status(200).json(cidadeJson)
           })
       } else {
         response
@@ -80,6 +88,7 @@ function login(request, response, next) {
 
 module.exports = {
     cadastro,
+    listagem,
     buscaPorId,
     edicao,
     login,
