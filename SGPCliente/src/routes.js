@@ -36,6 +36,8 @@ import React from 'react';
 // const Users = React.lazy(() => import('./views/Users/Users'));
 // const User = React.lazy(() => import('./views/Users/User'));
 const fiel = React.lazy(()=> import('./pages/Fiel'));
+const ModalView = React.lazy(()=> import('./component/modalfunc'));
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -80,7 +82,8 @@ const routes = [
   // { path: '/charts', name: 'Charts', component: Charts },
    //{ path: '/users', exact: true,  name: 'Users', component: Users },
    //{ path: '/users/:id', exact: true, name: 'User Details', component: User },
-  { path: '/cadastros/Fiel/:page?', name: 'Fiel', component: fiel },
+  { path: '/cadastros/Fiel/', exact: true, component: fiel },
+  { path: '/cadastros/Fiel/:Id', component: ModalView },
 ];
 
 export default routes;
