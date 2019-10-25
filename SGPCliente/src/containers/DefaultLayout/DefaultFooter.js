@@ -11,11 +11,11 @@ class DefaultFooter extends Component {
   render() {
 
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+    const { children } = this.props;
 
     return (
       <React.Fragment>
-        <span><a href="#">SGP - Sistema de Gerenciamento Paroquial </a> &copy; 2019 </span>
+        <span>SGP - Sistema de Gerenciamento Paroquial &copy; 2019 </span>
       </React.Fragment>
     );
   }

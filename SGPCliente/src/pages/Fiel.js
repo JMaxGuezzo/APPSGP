@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, 
-        ModalBody, 
-        ModalFooter, 
-        ModalHeader, 
+import { 
         Card, 
         CardBody, 
         CardHeader, 
@@ -13,11 +10,8 @@ import { Modal,
         Row, 
         Table, 
         Button,
-        FormGroup,
-        Label,
-        Input,
-        Form,} from 'reactstrap';
-import { Link, Route } from 'react-router-dom';
+        } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import api from '../component/api';
 
 class Fiel extends Component {
@@ -44,7 +38,7 @@ class Fiel extends Component {
     const { fiels } = this.state;
     const fielsItems = fiels.map((fiel) => {
       return (
-        <tr>
+        <tr key={fiel.id}>
           <td>{fiel.id}</td>
           <td>
           <Link to={'/cadastros/Fiel/' + fiel.id}>
@@ -52,10 +46,10 @@ class Fiel extends Component {
             </Link>
           </td>
           <td>{fiel.telefone}</td>
-          <td>{fiel.situacao == "A" ? 'Sim' : 'Não'}</td>
+          <td>{fiel.situacao === "A" ? 'Sim' : 'Não'}</td>
           <td>
             <Link to={'/cadastros/Fiel/' + fiel.id}>
-               <i  class="fa fa-edit"></i>
+               <i  className="fa fa-edit"></i>
             </Link>
           </td>
         </tr>
