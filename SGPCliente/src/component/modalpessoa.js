@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
+
 import { Modal, 
     ModalBody, 
     ModalFooter, 
     ModalHeader, 
-    Col, 
     Row, 
     Button,
-    FormGroup,
-    Label,
-    Input,
     Form,} from 'reactstrap';
-    
+
     import api from './api';
+    import grupoCampos from './campos'
 
     export default function Modalfunc ({history, match}){  
     const [modal, setModal] = useState(true);
@@ -46,6 +44,8 @@ import { Modal,
       setCpf(response.data.cpf);
       setSituacao(response.data.situacao);
     }; 
+    
+
      const componentAdd = ()=> {
       // await api.get('/api/pessoa/'+ id,{
       //   id,
@@ -53,122 +53,36 @@ import { Modal,
         console.log("Componente Funcionando");
       }
 
-    function Event(Atributo){
-      const atributo = event => Atributo(event.target.value)
-      return atributo;
-    }
-
-
     return(
-        <Modal size="xl" onEnter={function (){componentDidMount();}} isOpen={modal} toggle={toggle} >
-                  <ModalHeader>Fiel</ModalHeader>
-                  <ModalBody>
-                  <Form>
-                    <Row>
-                    <Col xs="1">
-                    <FormGroup >
-                        <Label>ID</Label>
-                        <Input
-                        type="text" 
-                        placeholder="ID"
-                        value={id}
-                        onChange={Event(setId)}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="3">
-                      <FormGroup>
-                        <Label>Nome</Label>
-                        <Input type="text" 
-                        placeholder="Digite Seu Nome."
-                        value={nome}
-                        onChange={Event(setNome)}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup>
-                        <Label>Data de Nascimento</Label>
-                        <Input type="date" 
-                        placeholder="date placeholder"
-                        value={datanasc}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup>
-                        <Label>Telefone</Label>
-                        <Input  type="text" placeholder="Digite seu telefone"
-                        value={telefone}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup>
-                        <Label>Celular</Label>
-                        <Input type="text" placeholder="Digite o seu celular."
-                        value={celular}/>
-                      </FormGroup>
-                    </Col>
-                    </Row>
-                    <Row>
-                    <Col xs="4">
-                      <FormGroup>
-                        <Label>Endereco</Label>
-                        <Input type="text" placeholder="Digite seu endereco"
-                        value={endereco}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="1">
-                      <FormGroup>
-                        <Label>Numero</Label>
-                        <Input type="text" placeholder="Nº"
-                        value={numero}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup>
-                        <Label>Bairro</Label>
-                        <Input type="text" placeholder="Digite Seu bairro"
-                        value={bairro}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="3">
-                      <FormGroup>
-                        <Label>Complemento</Label>
-                        <Input type="text" placeholder="Digite um Complemento"
-                        value={complemento}/>
-                      </FormGroup>
-                    </Col>
-                    </Row>
-                    <Row>
-                    <Col xs="3">
-                      <FormGroup>
-                        <Label>RG</Label>
-                        <Input  type="number" placeholder="Digite seu RG"
-                        value={rg}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="3">
-                      <FormGroup>
-                        <Label>CPF</Label>
-                        <Input type="number" placeholder="Digite seu CPF"
-                        value={cpf}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup>
-                        <Label>Situação</Label>
-                        <Input  type="text"  placeholder="Digite sua situação"
-                        value={situacao === "A" ? "Ativo" : "Inativo"}/>
-                      </FormGroup>
-                    </Col>
-                    </Row>
-                    <FormGroup>
-                  </FormGroup>
-                    </Form>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" onClick={componentAdd}>Editar</Button>
-                    <Button color="success" onClick={toggle}>Salvar</Button>
-                    <Button color="secondary" onClick={toggle}>Fechar</Button>
-                  </ModalFooter>
-                </Modal>
+      <Modal size="xl" onEnter={function (){componentDidMount();}} isOpen={modal} toggle={toggle} >
+        <ModalHeader toggle={toggle}>Fiel</ModalHeader>
+          <ModalBody>
+            <Form>
+              <Row>
+                {grupoCampos("1","ID", "text", "ID", id, event => setId(event.target.value))}
+                {grupoCampos("3", "Nome", "text", "Digite Seu Nome..", nome, event => setNome(event.target.value))}  
+                {grupoCampos("2","Data Nascimento", "date", "__/__/___", datanasc, event => setDatanasc(event.target.value))}
+                {grupoCampos("2","Telefone", "text", "__/__/___", telefone, event => setTelefone(event.target.value))}
+                {grupoCampos("2","Celular", "text", "__/__/___", celular,  event => setCelular(event.target.value))}
+              </Row>
+              <Row>
+                {grupoCampos("4","Endereco", "text", "Digite seu endereco", endereco, event => setEndereco(event.target.value))}
+                {grupoCampos("1", "Numero", "Number", "Numero Casa", numero, event => setNumero(event.target.value))}
+                {grupoCampos("2","Bairro", "text", "Digite Seu Bairro", bairro, event => setBairro(event.target.value))}
+                {grupoCampos("3","Complemento", "text", "Complemento", complemento, event => setComplemento(event.target.value))}
+                {grupoCampos("2","Celular", "text", "__/__/___", celular, event => setCelular(event.target.value))}
+              </Row>
+              <Row>
+                {grupoCampos("3","RG", "text", "RG", rg, event => setRg(event.target.value))}
+                {grupoCampos("3", "CPF", "text", "CPF", cpf, event => setCpf(event.target.value))}   
+                {grupoCampos("2","Situação", "text", "Situação", situacao, event => setRg(situacao === "A" ? "Ativo" : "Inativo"))}
+              </Row>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={componentAdd}>Editar</Button>
+            <Button color="success" onClick={componentAdd}>Salvar</Button>
+          </ModalFooter>
+      </Modal>
     );
 }

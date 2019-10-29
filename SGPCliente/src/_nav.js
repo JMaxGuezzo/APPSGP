@@ -48,12 +48,12 @@ export default {
         },
         {
           name: 'Cidade',
-          url: '/base/cards',
+          url: '/listagem/cidade',
           icon: 'icon-puzzle',
         },
         {
           name: 'Estado',
-          url: '/base/carousels',
+          url: '/listagem/estado/',
           icon: 'icon-puzzle',
         },
         {

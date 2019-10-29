@@ -14,7 +14,7 @@ function cadastro(request, response, next) {
 function listagem(request, response, next) {
     
   Cidade.findAll({
-    attributes: ['nome'],
+    attributes: ['id','nome'],
         include: [
           {
             model: Estado,

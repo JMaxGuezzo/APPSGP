@@ -14,7 +14,7 @@ function cadastro(request, response, next) {
 function listagem(request, response, next) {
     
   Estado.findAll({
-      attributes: ['nome'],
+      attributes: ['id','nome', 'sigla'],
       
     })
       .then(function (estado) {
