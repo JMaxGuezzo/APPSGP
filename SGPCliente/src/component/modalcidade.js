@@ -37,14 +37,12 @@ import { Modal,
       })
       
       }; 
-console.log(estado);
     async function componentAll () {
       if(match.params.Id != null){
         const responseAlter = await api.put('/api/cidade/'+ id,{
           id,
           nome,
     })
-    console.log(responseAlter.status);
     if(responseAlter.status === 200){
       alert("Cidade Alterada Com Sucesso");
       toggle();
@@ -60,7 +58,10 @@ console.log(estado);
   }
 }
 }
-
+const handleChange = (event) => {
+ const Event =  event => setEstadoNome(event.target.value);
+ return Event;
+}
     return(
       <Modal size="sm" onEnter={function (){componentDidMount();}} isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Estado</ModalHeader>
@@ -70,10 +71,10 @@ console.log(estado);
                 {grupoCampos("3","ID", "text", "ID", id, event => setId(event.target.value))}
                 {grupoCampos("5", "Cidade", "text", "Nome da Cidade", nome, event => setNome(event.target.value))}  
                 <Col xs="8">
-                  <Label>Estado</Label>
-                <Input type="select" name="select" id="exampleSelect">
+                <Label>Estado</Label>
+                <Input type="select" name="select" onChange={handleChange()}>
                   {estado.map(list =>(
-                    <option >
+                    <option value={list.id}>
                       {list.nome}
                       </option>
                   ))}
