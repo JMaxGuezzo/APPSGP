@@ -14,18 +14,18 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Fiel extends Component {
+class Tipopessoa extends Component {
   
   state = {
-    fiels: [],
+    tipopessoa: [],
   }
   
   async componentDidMount() {
-    api.get('/api/pessoa')
+    api.get('/api/tipopessoa')
       .then(response => {
         const { data } = response;
         this.setState({
-          fiels: data
+          tipopessoa: data
         })
       })
       .catch(err => {
@@ -34,59 +34,48 @@ class Fiel extends Component {
       })
   }
 
-  renderFiels = () => {
-    const { fiels } = this.state;
-    const fielsItems = fiels.map((fiel) => {
+  renderTipopessoas = () => {
+    const { tipopessoa } = this.state;
+    const tipopessoasItems = tipopessoa.map((tipopessoa) => {
       return (
-        <tr key={fiel.id}>
-          <td>{fiel.id}</td>
+        <tr key={tipopessoa.id}>
+          <td>{tipopessoa.id}</td>
           <td>
-          <Link to={'/cadastros/Fiel/' + fiel.id}>
-              {fiel.nome}
-            </Link>
-          </td>
-          <td>{fiel.telefone}</td>
-          <td>{fiel.situacao === "A" ? 'Sim' : 'Não'}</td>
-          <td>
-            <Link to={'/cadastros/Fiel/' + fiel.id}>
-               <i  className="fa fa-edit"></i>
-            </Link>
+          <Link to={'/listagem/tipopessoa/' + tipopessoa.id}>
+              {tipopessoa.nome}
+          </Link>
           </td>
         </tr>
       )
     });
-    return fielsItems;
+    return tipopessoasItems;
   }
 
 
   render() {
-    
     return (
       <div className="animated fadeIn">
         <Row>
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Fieis</i>
+                <i> Listagem dos Tipos de Pessoas</i>
               </CardHeader>
-              <Link to={'/cadastros/'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Col xs="4">
+              <Link to={'/cadastro/tipopessoa'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              </Col>
               <CardBody>
-              
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Telefone</th>
-                  <th>Ativo</th>
-                  <th>Editar</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderFiels()}
+                  {this.renderTipopessoas()}
                   </tbody>
                 </Table>
-
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
                   <PaginationItem active>
@@ -102,9 +91,8 @@ class Fiel extends Component {
           </Col>
         </Row>
       </div>
-
     );
   }
 }
 
-export default Fiel;
+export default Tipopessoa;

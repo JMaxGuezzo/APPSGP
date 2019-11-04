@@ -15,7 +15,7 @@ function cadastro(request, response, next) {
 function listagem(request, response, next) {
     
   TipoAgendamento.findAll({
-      attributes: ['nome'],
+      attributes: ['id','nome'],
       
     })
       .then(function (tipoAgendamento) {

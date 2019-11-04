@@ -9,56 +9,50 @@ import { Modal,
     import api from './api';
     import grupoCampos from './campos'
 
-    export default function ModalEstado ({history, match}){  
+    export default function ModalCeb ({history, match}){  
     const [modal, setModal] = useState(true);
     const [id, setId] = useState(''); 
-    const [nome, setNome] = useState(''); 
-    const [sigla, setSigla] = useState('');  
+    const [nome, setNome] = useState('');  
     
-     const toggle = () => setModal(!modal, history.push('/listagem/estado/') );
+     const toggle = () => setModal(!modal, history.push('/listagem/ceb/') );
 
      async function componentDidMount() { 
       const Parametro = match.params.Id;
       if(match.params.Id != null){
-      const response = await api.get('/api/estado/'+ Parametro);
+      const response = await api.get('/api/ceb/'+ Parametro);
       setId(response.data.id);
       setNome(response.data.nome);
-      setSigla(response.data.sigla);
       } 
       }; 
 
     async function componentAll () {
       if(match.params.Id != null){
-        const responseAlter = await api.put('/api/estado/'+ id,{
+        const responseAlter = await api.put('/api/ceb/'+ id,{
           id,
           nome,
-          sigla,
     })
     if(responseAlter.status === 200){
-      alert("Estado Alterado Com Sucesso");
+      alert("Ceb Alterada Com Sucesso");
       toggle();
     }
   }else{
-    const responseAdd =  await api.post('/api/estado/'+ id,{
-      id,
+    const responseAdd =  await api.post('/api/ceb/'+ id,{
       nome,
-      sigla,
   })
   if(responseAdd.status === 201){
-    alert("Estado Cadastrado com Sucesso.");
+    alert("Ceb Cadastrada com Sucesso.");
     toggle();
   }
 }
 }
     return(
       <Modal size="xl" onEnter={function (){componentDidMount();}} isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>Estado</ModalHeader>
+        <ModalHeader toggle={toggle}>Ceb</ModalHeader>
           <ModalBody>
             <Form>
               <Row>
                 {grupoCampos(true,"1","ID", "text", "ID", id, event => setId(event.target.value))}
-                {grupoCampos(false,"3", "Estado", "text", "Nome Estado", nome, event => setNome(event.target.value))}  
-                {grupoCampos(false,"1","Sigla", "text", "Sigla", sigla, event => setSigla(event.target.value))}
+                {grupoCampos(false,"3", "Ceb", "text","Nome Ceb ", nome, event => setNome(event.target.value))}  
               </Row>
             </Form>
           </ModalBody>

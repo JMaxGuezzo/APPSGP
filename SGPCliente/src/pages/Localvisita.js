@@ -14,21 +14,21 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Localvisita extends Component {
   
   state = {
-    cidades: [],
-    estado: "",
+    locais: [],
+    cidade: "",
   }
 
   
 
   async componentDidMount() {
-    await api.get('/api/cidade')
+    await api.get('/api/localvisita')
       .then(response => {
         const { data } = response;
         this.setState({
-          cidades: data
+          locais: data
         })
       })
       .catch(err => {
@@ -37,23 +37,24 @@ class Estado extends Component {
       })
     }
   
-  renderCidades = () => {
-    const { cidades } = this.state;
-    const cidadesItems = cidades.map((cidade) => {
+  renderLocalVisita = () => {
+    const { locais } = this.state;
+    const locaisItems = locais.map((local) => {
       return (
-        <tr key={cidade.id}>
-          <td>{cidade.id}</td>
+        <tr key={local.id}>
+          <td>{local.id}</td>
           <td>
-          <Link to={'/listagem/cidade/' + cidade.id}>
-              {cidade.nome}
+          <Link to={'/listagem/localvisita/' + local.id}>
+              {local.nomelocal}
           </Link>
           </td>
-          <td>{cidade.cidadeestado.nome}</td>
+          <td>{local.telefone}</td>
+          <td>{local.visitacidade.nome}</td>
         </tr>
         
       )
     });
-    return cidadesItems;
+    return locaisItems;
   }
   
 
@@ -64,10 +65,10 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Cidades</i>
+                <i> Listagem dos Locais de Visita</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/cidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/localvisita'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
@@ -75,11 +76,12 @@ class Estado extends Component {
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Estado</th>
+                  <th>Telefone</th>
+                  <th>Cidade</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderCidades()}
+                  {this.renderLocalVisita()}
                   </tbody>
                 </Table>
                 <Pagination>
@@ -101,4 +103,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Localvisita;

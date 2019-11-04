@@ -13,7 +13,7 @@ function cadastro(request, response, next) {
 
 function listagem(request, response, next) {
   Comunidade.findAll({
-    attributes: ['nome'],
+    attributes: ['id','nome'],
     include: [
       {
         model: Ceb,

@@ -11,61 +11,61 @@ import {
 import api from './api';
 import grupoCampos from './campos';
 
-export default function ModalCidade({ history, match }) {
+export default function ModalComunidade({ history, match }) {
   const [modal, setModal] = useState(true);
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
-  const [estadoid, setEstadoId] = useState('');
-  const [estadonome, setEstadoNome] = useState('');
-  const [estado, setEstado] = useState([]);
+  const [cebid, setCebId] = useState('');
+  const [cebnome, setCebNome] = useState('');
+  const [ceb, setCeb] = useState([]);
 
-  const toggle = () => setModal(!modal, history.push('/listagem/cidade/'));
+  const toggle = () => setModal(!modal, history.push('/listagem/comunidade/'));
 
   async function componentDidMount() {
     const Parametro = match.params.Id;
     if (match.params.Id != null) {
-      const response = await api.get('/api/cidade/' + Parametro);
+      const response = await api.get('/api/comunidade/' + Parametro);
       setId(response.data.id);
       setNome(response.data.nome);
-      setEstadoId(response.data.estadoId);
+      setCebId(response.data.idceb);
     }
-    await api.get('/api/estado/')
+    await api.get('/api/ceb/')
       .then(response => {
         const { data } = response;
-        setEstado(data)
+        setCeb(data)
       })
 
   };
 
-  async function PesquisaEstado() {
-    await api.get('/api/estado/' + estadoid)
+  async function PesquisaCeb() {
+    await api.get('/api/ceb/' + cebid)
       .then(response => {
         const { data } = response;
-        setEstadoNome(data.nome)
+        setCebNome(data.nome)
 
       })
   }
-  PesquisaEstado();
+  PesquisaCeb();
 
   async function componentAll() {
     if (match.params.Id != null) {
-      const responseAlter = await api.put('/api/cidade/' + id, {
+      const responseAlter = await api.put('/api/comunidade/' + id, {
         id,
         nome,
-        estadoId: estadoid,
+        idceb: cebid,
       })
       if (responseAlter.status === 200) {
-        alert("Cidade Alterada Com Sucesso");
+        alert("Comunidade Alterada Com Sucesso");
         toggle();
       }
     } else {
-      const responseAdd = await api.post('/api/cidade/' + id, {
+      const responseAdd = await api.post('/api/comunidade/' + id, {
         id,
         nome,
-        estadoId: estadoid
+        idceb: cebid
       })
       if (responseAdd.status === 201) {
-        alert("Cidade Cadastrada com Sucesso.");
+        alert("Comunidade Cadastrada com Sucesso.");
         toggle();
       }
     }
@@ -73,17 +73,17 @@ export default function ModalCidade({ history, match }) {
 
   return (
     <Modal size="xl" onEnter={function () { componentDidMount(); }} isOpen={modal} toggle={toggle} >
-      <ModalHeader toggle={toggle}>Cidade</ModalHeader>
+      <ModalHeader toggle={toggle}>Comunidade</ModalHeader>
       <ModalBody>
         <Form>
           <Row>
             {grupoCampos(true, "3", "ID", "text", "ID", id, event => setId(event.target.value))}
-            {grupoCampos(false, "5", "Cidade", "text", "Nome da Cidade", nome, event => setNome(event.target.value))}
+            {grupoCampos(false, "5", "Comunidade", "text", "Nome da Comunidade", nome, event => setNome(event.target.value))}
             <Col xs="8">
-              <Label>Estado</Label>
-              <Input type="select" name="select" onChange={event => setEstadoId(event.target.value)}>
-                <option value={estadoid}>{estadonome}</option>
-                {estado.map(list => (
+              <Label>Cebs</Label>
+              <Input type="select" name="select" onChange={event => setCebId(event.target.value)}>
+                <option value={cebid}>{cebnome}</option>
+                {ceb.map(list => (
                   <option key={list.id} value={list.id}>
                     {list.nome}
                   </option>

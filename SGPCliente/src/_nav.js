@@ -3,7 +3,7 @@ export default {
     {
       name: 'Inicio',
       url: '/dashboard',
-      icon: 'icon-speedometer',
+      icon: 'cui-home',
       badge: {
         variant: 'info',
         text: '',
@@ -39,28 +39,51 @@ export default {
     {
       name: 'Cadastros',
       url: '/pages',
-      icon: 'icon-puzzle',
+      icon: 'cui-people',
       children: [
         {
-          name: 'Fiel',
-          url: '/cadastros/Fiel',
-          icon: 'icon-puzzle',
+          name: 'Pessoa',
+          url: '/listagem/pessoa',
+          icon: 'cui-user-follow',
         },
         {
           name: 'Cidade',
           url: '/listagem/cidade',
-          icon: 'icon-puzzle',
+          icon: 'cui-user-follow',
         },
         {
           name: 'Estado',
           url: '/listagem/estado/',
-          icon: 'icon-puzzle',
+          icon: 'cui-user-follow',
         },
         {
-          name: 'Padre',
-          url: '/base/collapses',
-          icon: 'icon-puzzle',
-        
+          name: 'Tipo Pessoa',
+          url: '/listagem/tipopessoa/',
+          icon: 'cui-user-follow',
+        },
+
+        {
+          name: 'Comunidade',
+          url: '/listagem/comunidade/',
+          icon: 'cui-user-follow',
+        },
+
+        {
+          name: 'Ceb ',
+          url: '/listagem/ceb/',
+          icon: 'cui-user-follow',
+        },
+
+        {
+          name: 'Tipo Agendamento',
+          url: '/listagem/tipoagendamento/',
+          icon: 'cui-user-follow',
+        },
+
+        {
+          name: 'Local Visita',
+          url: '/listagem/localvisita/',
+          icon: 'cui-user-follow',
         },
       ]},
     //     {

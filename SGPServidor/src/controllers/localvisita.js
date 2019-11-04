@@ -17,6 +17,7 @@ function listagem(request, response, next) {
     
   LocalVisita.findAll({
       attributes: [
+        'id',
         'nomelocal',  
         'endereco',
         'numcasa',

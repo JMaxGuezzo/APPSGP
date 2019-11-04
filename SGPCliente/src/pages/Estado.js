@@ -62,7 +62,9 @@ class Estado extends Component {
               <CardHeader>
                 <i> Listagem de Estados</i>
               </CardHeader>
+              <Col xs="4">
               <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              </Col>
               <CardBody>
                 <Table responsive striped>
                   <thead>

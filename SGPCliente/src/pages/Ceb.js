@@ -14,48 +14,43 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Ceb extends Component {
   
   state = {
-    cidades: [],
-    estado: "",
+    cebs: [],
   }
-
   
-
   async componentDidMount() {
-    await api.get('/api/cidade')
+    api.get('/api/ceb')
       .then(response => {
         const { data } = response;
         this.setState({
-          cidades: data
+          cebs: data
         })
       })
       .catch(err => {
         console.warn(err);
         alert(err.message)
       })
-    }
-  
-  renderCidades = () => {
-    const { cidades } = this.state;
-    const cidadesItems = cidades.map((cidade) => {
+  }
+
+  renderCebs = () => {
+    const { cebs } = this.state;
+    const cebsItems = cebs.map((ceb) => {
       return (
-        <tr key={cidade.id}>
-          <td>{cidade.id}</td>
+        <tr key={ceb.id}>
+          <td>{ceb.id}</td>
           <td>
-          <Link to={'/listagem/cidade/' + cidade.id}>
-              {cidade.nome}
+          <Link to={'/listagem/ceb/' + ceb.id}>
+              {ceb.nome}
           </Link>
           </td>
-          <td>{cidade.cidadeestado.nome}</td>
         </tr>
-        
       )
     });
-    return cidadesItems;
+    return cebsItems;
   }
-  
+
 
   render() {
     return (
@@ -64,27 +59,26 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Cidades</i>
+                <i> Listagem das Cebs</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/cidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/ceb'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
-                  <th>Nome</th>
-                  <th>Estado</th>
+                  <th>Ceb</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderCidades()}
+                  {this.renderCebs()}
                   </tbody>
                 </Table>
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                  <PaginationItem >
+                  <PaginationItem active>
                     <PaginationLink tag="button">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
@@ -101,4 +95,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Ceb;

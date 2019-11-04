@@ -26,7 +26,7 @@ function cadastro(request, response, next) {
 function listagem(request, response, next) {
     
   Ceb.findAll({
-    attributes: ['nome']
+    attributes: ['id','nome']
 })
       .then(function (ceb) {
         response.status(200).json(ceb)

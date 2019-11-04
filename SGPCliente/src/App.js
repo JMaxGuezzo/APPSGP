@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
+import './scss/style.css';
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 

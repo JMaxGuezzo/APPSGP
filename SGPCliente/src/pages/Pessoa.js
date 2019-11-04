@@ -14,77 +14,77 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Pessoa extends Component {
   
   state = {
-    cidades: [],
-    estado: "",
+    pessoas: [],
   }
-
   
-
   async componentDidMount() {
-    await api.get('/api/cidade')
+    api.get('/api/pessoa')
       .then(response => {
         const { data } = response;
         this.setState({
-          cidades: data
+          pessoas: data
         })
       })
       .catch(err => {
         console.warn(err);
         alert(err.message)
       })
-    }
-  
-  renderCidades = () => {
-    const { cidades } = this.state;
-    const cidadesItems = cidades.map((cidade) => {
+  }
+
+  renderPessoas = () => {
+    const { pessoas } = this.state;
+    const pessoasItems = pessoas.map((pessoa) => {
       return (
-        <tr key={cidade.id}>
-          <td>{cidade.id}</td>
+        <tr key={pessoa.id}>
+          <td>{pessoa.id}</td>
           <td>
-          <Link to={'/listagem/cidade/' + cidade.id}>
-              {cidade.nome}
-          </Link>
+          <Link to={'/listagem/pessoa/' + pessoa.id}>
+              {pessoa.nome}
+            </Link>
           </td>
-          <td>{cidade.cidadeestado.nome}</td>
+          <td>{pessoa.telefone}</td>
+          <td>{pessoa.situacao === "A" ? 'Sim' : 'Não'}</td>
         </tr>
-        
       )
     });
-    return cidadesItems;
+    return pessoasItems;
   }
-  
+
 
   render() {
+    
     return (
       <div className="animated fadeIn">
         <Row>
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Cidades</i>
+                <i> Listagem de Pessoas</i>
               </CardHeader>
-              <Col xs="4">
-              <Link to={'/cadastro/cidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
-              </Col>
+              <Link to={'/cadastro/pessoa/'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
               <CardBody>
+              
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Estado</th>
+                  <th>Telefone</th>
+                  <th>Ativo</th>
+                  <th>Editar</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderCidades()}
+                  {this.renderPessoas()}
                   </tbody>
                 </Table>
+
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                  <PaginationItem >
+                  <PaginationItem active>
                     <PaginationLink tag="button">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
@@ -97,8 +97,9 @@ class Estado extends Component {
           </Col>
         </Row>
       </div>
+
     );
   }
 }
 
-export default Estado;
+export default Pessoa;
