@@ -6,9 +6,8 @@ import { Modal,
     Row, 
     Button,
     Form, Input, Col, Label} from 'reactstrap';
-    import api from './api';
-    import grupoCampos from './campos'
-import { async } from 'q';
+    import api from '../api.js';
+    import grupoCampos from '../campos'
 
     export default function ModalCidade ({history, match}){  
     const [modal, setModal] = useState(true);
@@ -60,6 +59,7 @@ import { async } from 'q';
     const responseAdd =  await api.post('/api/cidade/'+ id,{
       id,
       nome,
+      estadoId: estadoid,
 
   })
   if(responseAdd.status === 201){

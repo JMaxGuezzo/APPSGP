@@ -6,8 +6,8 @@ import { Modal,
     Row, 
     Button,
     Form,} from 'reactstrap';
-    import api from './api';
-    import grupoCampos from './campos'
+    import api from '../api';
+    import grupoCampos from '../campos'
 
     export default function ModalEstado ({history, match}){  
     const [modal, setModal] = useState(true);

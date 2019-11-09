@@ -42,10 +42,10 @@ class Estado extends Component {
           <td>{cidade.id}</td>
           <td>
           <Link to={'/listagem/cidade/' + cidade.id}>
-              {cidade.nome}
+              {}
           </Link>
           </td>
-          <td>{cidade.nome}</td>
+          <td></td>
         </tr>
       )
     });

@@ -4,9 +4,9 @@ import React from 'react';
 const fiel = React.lazy(()=> import('./pages/Fiel'));
 const estado = React.lazy(()=> import('./pages/Estado'));
 const cidade = React.lazy(()=> import('./pages/Cidade'));
-const modalPessoa = React.lazy(()=> import('./component/modalpessoa'));
-const modalEstado = React.lazy(()=> import('./component/modalestado'));
-const modalCidade = React.lazy(()=> import('./component/modalcidade'));
+const modalPessoa = React.lazy(()=> import('./component/modal/modalpessoa'));
+const modalEstado = React.lazy(()=> import('./component/modal/modalestado'));
+const modalCidade = React.lazy(()=> import('./component/modal/modalcidade'));
 
 const routes = [
   { path: '/listagem/Fiel/', exact: true, component: fiel },
