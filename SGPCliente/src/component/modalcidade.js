@@ -45,6 +45,7 @@ export default function ModalCidade({ history, match }) {
 
       })
   }
+  
   PesquisaEstado();
 
   async function componentAll() {

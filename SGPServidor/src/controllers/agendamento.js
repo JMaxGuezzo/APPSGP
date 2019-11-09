@@ -18,7 +18,7 @@ function cadastro(request, response, next) {
 function listagem(request, response, next) {
     
   Agendamento.findAll({
-    attributes: [],
+    attributes: ['id'],
         include: [
           {
             model: Pessoa,

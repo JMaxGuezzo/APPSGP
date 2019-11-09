@@ -9,6 +9,7 @@ const comunidade = React.lazy(()=> import('./pages/Comunidade'));
 const ceb = React.lazy(()=> import('./pages/Ceb'));
 const tipoagendamento = React.lazy(()=> import('./pages/Tipoagendamento'));
 const localvisita = React.lazy(()=> import('./pages/Localvisita'));
+const agendamento = React.lazy(()=> import('./pages/Agendamento'));
 
 const modalPessoa = React.lazy(()=> import('./component/modalpessoa'));
 const modalEstado = React.lazy(()=> import('./component/modalestado'));
@@ -18,6 +19,7 @@ const modalComunidade = React.lazy(()=> import('./component/modalcomunidade'));
 const modalCeb = React.lazy(()=> import('./component/modalceb'));
 const modalTipoagendamento = React.lazy(()=> import('./component/modaltipoagendamento'));
 const modalLocalvisita = React.lazy(()=> import('./component/modallocalvisita'));
+const modalAgendamento = React.lazy(()=> import('./component/modalagendamento'));
 
 const routes = [
   { path: '/cadastro/pessoa/', exact:true, component: modalPessoa },
@@ -51,6 +53,9 @@ const routes = [
   { path: '/cadastro/localvisita/', exact:true, component: modalLocalvisita },
   { path: '/listagem/localvisita/', exact:true, component: localvisita },
   { path: '/listagem/localvisita/:Id', component: modalLocalvisita },
+
+  { path: '/listagem/agendamento/', exact:true, component: agendamento },
+  { path: '/listagem/agendamento/:id', exact:true, component: modalAgendamento },
 ];
 
 export default routes;

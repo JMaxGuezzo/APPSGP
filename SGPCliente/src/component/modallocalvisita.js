@@ -51,7 +51,6 @@ export default function ModalLocalvisita({ history, match }) {
       .then(response => {
         const { data } = response;
         setCidadeNome(data.nome)
-
       })
   }
   PesquisaCidade();
