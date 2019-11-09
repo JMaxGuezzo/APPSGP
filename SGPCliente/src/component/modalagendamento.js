@@ -35,14 +35,14 @@ export default function ModalLocalvisita({ history, match }) {
     if (match.params.Id != null) {
       const response = await api.get('/api/agendamento/' + Parametro);
       console.log(response);
-      setIdagendamento(response.data.id);
-      setNomeagendalocal(response.data.agendalocal.nomelocal);
-      setEnderecoagenda(response.data.agendalocal.endereco);
-      setNumlocalagenda(response.data.agendalocal.numcasa);
-      setBairroagenda(response.data.agendalocal.bairro);
-      setNomepessoa(response.data.agendapessoa.nome);
-      setTelefonepessoa(response.data.agendapessoa.telefone);
-      setNometipo(response.data.agendatipo.nome); 
+      // setIdagendamento(response.data.id);
+      // setNomeagendalocal(response.data.agendalocal.nomelocal);
+      // setEnderecoagenda(response.data.agendalocal.endereco);
+      // setNumlocalagenda(response.data.agendalocal.numcasa);
+      // setBairroagenda(response.data.agendalocal.bairro);
+      // setNomepessoa(response.data.agendapessoa.nome);
+      // setTelefonepessoa(response.data.agendapessoa.telefone);
+      // setNometipo(response.data.agendatipo.nome); 
     }
   //   await api.get('/api/cidade/')
   //     .then(response => {
@@ -98,7 +98,7 @@ export default function ModalLocalvisita({ history, match }) {
     <Modal size="xl" onEnter={function () { componentDidMount(); }} isOpen={modal} toggle={toggle} >
       <ModalHeader toggle={toggle}>Local da Visita</ModalHeader>
       <ModalBody>
-        <Form>
+        {/* <Form>
           <Row>
             {grupoCampos(true, "2", "ID", "text", "ID", id, event => setIdagendamento(event.target.value))}
             {grupoCampos(false, "5", "Local", "text", "Nome do Local", nomeagendalocal, event => setNomeagendalocal(event.target.value))}
@@ -121,10 +121,10 @@ export default function ModalLocalvisita({ history, match }) {
               </Input>
             </Col>
           </Row>
-        </Form>
+        </Form> */}
       </ModalBody>
       <ModalFooter>
-        <Button color="success" onClick={componentAll}>Salvar</Button>
+        <Button color="success">Salvar</Button>
       </ModalFooter>
     </Modal>
   );
