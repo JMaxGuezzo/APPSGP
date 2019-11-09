@@ -6,59 +6,54 @@ import { Modal,
     Row, 
     Button,
     Form,} from 'reactstrap';
-    import api from '../api';
-    import grupoCampos from '../campos'
+    import api from './api';
+    import grupoCampos from './campos'
 
-    export default function ModalEstado ({history, match}){  
+    export default function ModalTipoPessoa ({history, match}){  
     const [modal, setModal] = useState(true);
     const [id, setId] = useState(''); 
     const [nome, setNome] = useState(''); 
-    const [sigla, setSigla] = useState('');  
     
-     const toggle = () => setModal(!modal, history.push('/listagem/estado/') );
+     const toggle = () => setModal(!modal, history.push('/listagem/tipopessoa/') );
 
      async function componentDidMount() { 
       const Parametro = match.params.Id;
       if(match.params.Id != null){
-      const response = await api.get('/api/estado/'+ Parametro);
+      const response = await api.get('/api/tipopessoa/'+ Parametro);
       setId(response.data.id);
       setNome(response.data.nome);
-      setSigla(response.data.sigla);
       } 
       }; 
 
     async function componentAll () {
       if(match.params.Id != null){
-        const responseAlter = await api.put('/api/estado/'+ id,{
+        const responseAlter = await api.put('/api/tipopessoa/'+ id,{
           id,
           nome,
-          sigla,
     })
     if(responseAlter.status === 200){
-      alert("Estado Alterado Com Sucesso");
+      alert("Tipo de Pessoa Alterado Com Sucesso");
       toggle();
     }
   }else{
-    const responseAdd =  await api.post('/api/estado/'+ id,{
+    const responseAdd =  await api.post('/api/tipopessoa/'+ id,{
       id,
       nome,
-      sigla,
   })
   if(responseAdd.status === 201){
-    alert("Estado Cadastrado com Sucesso.");
+    alert("Tipo de Pessoa Cadastrada com Sucesso.");
     toggle();
   }
 }
 }
     return(
       <Modal size="xl" onEnter={function (){componentDidMount();}} isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>Estado</ModalHeader>
+        <ModalHeader toggle={toggle}>Tipo de Pessoa</ModalHeader>
           <ModalBody>
             <Form>
               <Row>
                 {grupoCampos(true,"1","ID", "text", "ID", id, event => setId(event.target.value))}
-                {grupoCampos(false,"3", "Estado", "text", "Nome Estado", nome, event => setNome(event.target.value))}  
-                {grupoCampos(false,"1","Sigla", "text", "Sigla", sigla, event => setSigla(event.target.value))}
+                {grupoCampos(false,"3", "Tipo Pessoa", "text", "Tipo de Pessoa", nome, event => setNome(event.target.value))}
               </Row>
             </Form>
           </ModalBody>

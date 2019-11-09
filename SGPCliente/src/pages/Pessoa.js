@@ -14,18 +14,18 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Pessoa extends Component {
   
   state = {
-    estados: [],
+    pessoas: [],
   }
   
   async componentDidMount() {
-    api.get('/api/estado')
+    api.get('/api/pessoa')
       .then(response => {
         const { data } = response;
         this.setState({
-          estados: data
+          pessoas: data
         })
       })
       .catch(err => {
@@ -34,50 +34,53 @@ class Estado extends Component {
       })
   }
 
-  renderEstados = () => {
-    const { estados } = this.state;
-    const estadosItems = estados.map((estado) => {
+  renderPessoas = () => {
+    const { pessoas } = this.state;
+    const pessoasItems = pessoas.map((pessoa) => {
       return (
-        <tr key={estado.id}>
-          <td>{estado.id}</td>
+        <tr key={pessoa.id}>
+          <td>{pessoa.id}</td>
           <td>
-          <Link to={'/listagem/estado/' + estado.id}>
-              {estado.nome}
-          </Link>
+          <Link to={'/listagem/pessoa/' + pessoa.id}>
+              {pessoa.nome}
+            </Link>
           </td>
-          <td>{estado.sigla}</td>
+          <td>{pessoa.telefone}</td>
+          <td>{pessoa.situacao === "A" ? 'Sim' : 'Não'}</td>
         </tr>
       )
     });
-    return estadosItems;
+    return pessoasItems;
   }
 
 
   render() {
+    
     return (
       <div className="animated fadeIn">
         <Row>
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Estados</i>
+                <i> Listagem de Pessoas</i>
               </CardHeader>
-              <Col xs="4">
-              <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
-              </Col>
+              <Link to={'/cadastro/pessoa/'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
               <CardBody>
+              
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Sigla</th>
+                  <th>Telefone</th>
+                  <th>Ativo</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderEstados()}
+                  {this.renderPessoas()}
                   </tbody>
                 </Table>
+
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
                   <PaginationItem active>
@@ -93,8 +96,9 @@ class Estado extends Component {
           </Col>
         </Row>
       </div>
+
     );
   }
 }
 
-export default Estado;
+export default Pessoa;

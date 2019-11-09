@@ -14,44 +14,48 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Comunidade extends Component {
   
   state = {
-    estados: [],
+    comunidade: [],
+    ceb: "",
   }
+
   
+
   async componentDidMount() {
-    api.get('/api/estado')
+    await api.get('/api/comunidade')
       .then(response => {
         const { data } = response;
         this.setState({
-          estados: data
+          comunidade: data
         })
       })
       .catch(err => {
         console.warn(err);
         alert(err.message)
       })
-  }
-
-  renderEstados = () => {
-    const { estados } = this.state;
-    const estadosItems = estados.map((estado) => {
+    }
+  
+  renderComunidade = () => {
+    const { comunidade } = this.state;
+    const comunidadesItems = comunidade.map((comunidade) => {
       return (
-        <tr key={estado.id}>
-          <td>{estado.id}</td>
+        <tr key={comunidade.id}>
+          <td>{comunidade.id}</td>
           <td>
-          <Link to={'/listagem/estado/' + estado.id}>
-              {estado.nome}
+          <Link to={'/listagem/comunidade/' + comunidade.id}>
+              {comunidade.nome}
           </Link>
           </td>
-          <td>{estado.sigla}</td>
+          <td>{comunidade.comunidadeceb.nome}</td>
         </tr>
+        
       )
     });
-    return estadosItems;
+    return comunidadesItems;
   }
-
+  
 
   render() {
     return (
@@ -60,27 +64,27 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Estados</i>
+                <i> Listagem das Comunidades</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/comunidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
-                  <th>Nome</th>
-                  <th>Sigla</th>
+                  <th>Comunidade</th>
+                  <th>Ceb</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderEstados()}
+                  {this.renderComunidade()}
                   </tbody>
                 </Table>
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                  <PaginationItem active>
+                  <PaginationItem >
                     <PaginationLink tag="button">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
@@ -97,4 +101,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Comunidade;

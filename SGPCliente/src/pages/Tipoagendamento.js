@@ -14,18 +14,18 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Tipoagendamento extends Component {
   
   state = {
-    estados: [],
+    tipoagendamento: [],
   }
   
   async componentDidMount() {
-    api.get('/api/estado')
+    api.get('/api/tipoagendamento')
       .then(response => {
         const { data } = response;
         this.setState({
-          estados: data
+          tipoagendamento: data
         })
       })
       .catch(err => {
@@ -34,22 +34,21 @@ class Estado extends Component {
       })
   }
 
-  renderEstados = () => {
-    const { estados } = this.state;
-    const estadosItems = estados.map((estado) => {
+  renderTipoagendamentos = () => {
+    const { tipoagendamento } = this.state;
+    const tipoagendamentosItems = tipoagendamento.map((tipoagendamento) => {
       return (
-        <tr key={estado.id}>
-          <td>{estado.id}</td>
+        <tr key={tipoagendamento.id}>
+          <td>{tipoagendamento.id}</td>
           <td>
-          <Link to={'/listagem/estado/' + estado.id}>
-              {estado.nome}
+          <Link to={'/listagem/tipoagendamento/' + tipoagendamento.id}>
+              {tipoagendamento.nome}
           </Link>
           </td>
-          <td>{estado.sigla}</td>
         </tr>
       )
     });
-    return estadosItems;
+    return tipoagendamentosItems;
   }
 
 
@@ -60,10 +59,10 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Estados</i>
+                <i> Listagem de Agendamentos</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/tipoagendamento'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
@@ -71,11 +70,10 @@ class Estado extends Component {
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Sigla</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderEstados()}
+                  {this.renderTipoagendamentos()}
                   </tbody>
                 </Table>
                 <Pagination>
@@ -97,4 +95,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Tipoagendamento;

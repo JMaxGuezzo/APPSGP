@@ -14,18 +14,18 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Ceb extends Component {
   
   state = {
-    estados: [],
+    cebs: [],
   }
   
   async componentDidMount() {
-    api.get('/api/estado')
+    api.get('/api/ceb')
       .then(response => {
         const { data } = response;
         this.setState({
-          estados: data
+          cebs: data
         })
       })
       .catch(err => {
@@ -34,22 +34,21 @@ class Estado extends Component {
       })
   }
 
-  renderEstados = () => {
-    const { estados } = this.state;
-    const estadosItems = estados.map((estado) => {
+  renderCebs = () => {
+    const { cebs } = this.state;
+    const cebsItems = cebs.map((ceb) => {
       return (
-        <tr key={estado.id}>
-          <td>{estado.id}</td>
+        <tr key={ceb.id}>
+          <td>{ceb.id}</td>
           <td>
-          <Link to={'/listagem/estado/' + estado.id}>
-              {estado.nome}
+          <Link to={'/listagem/ceb/' + ceb.id}>
+              {ceb.nome}
           </Link>
           </td>
-          <td>{estado.sigla}</td>
         </tr>
       )
     });
-    return estadosItems;
+    return cebsItems;
   }
 
 
@@ -60,22 +59,21 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Estados</i>
+                <i> Listagem das Cebs</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/ceb'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
                   <thead>
                   <tr>
                   <th>Id</th>
-                  <th>Nome</th>
-                  <th>Sigla</th>
+                  <th>Ceb</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderEstados()}
+                  {this.renderCebs()}
                   </tbody>
                 </Table>
                 <Pagination>
@@ -97,4 +95,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Ceb;

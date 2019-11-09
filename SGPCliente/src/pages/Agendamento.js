@@ -14,44 +14,50 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 
-class Estado extends Component {
+class Agendamento extends Component {
   
   state = {
-    estados: [],
+    agendamentos: [],
+    estado: "",
   }
+
   
+
   async componentDidMount() {
-    api.get('/api/estado')
+    await api.get('/api/agendamento/')
       .then(response => {
         const { data } = response;
+        console.log(data);
         this.setState({
-          estados: data
+          agendamentos: data
         })
       })
       .catch(err => {
         console.warn(err);
         alert(err.message)
       })
-  }
-
-  renderEstados = () => {
-    const { estados } = this.state;
-    const estadosItems = estados.map((estado) => {
+    }
+  
+  renderAgendamentos = () => {
+    const { agendamentos } = this.state;
+    const agendamentosItems = agendamentos.map((agendamento) => {
       return (
-        <tr key={estado.id}>
-          <td>{estado.id}</td>
+        <tr key={agendamento.id}>
+          <td>{agendamento.id}</td>
           <td>
-          <Link to={'/listagem/estado/' + estado.id}>
-              {estado.nome}
+          <Link to={'/listagem/agendamento/' + agendamento.id}>
+              {agendamento.agendapessoa.nome}
           </Link>
           </td>
-          <td>{estado.sigla}</td>
+          <td>{agendamento.agendapessoa.telefone}</td>
+          <td>{agendamento.agendatipo.nome}</td>
         </tr>
+        
       )
     });
-    return estadosItems;
+    return agendamentosItems;
   }
-
+  
 
   render() {
     return (
@@ -60,10 +66,10 @@ class Estado extends Component {
           <Col >
             <Card>
               <CardHeader>
-                <i> Listagem de Estados</i>
+                <i> Listagem de Agendamentos</i>
               </CardHeader>
               <Col xs="4">
-              <Link to={'/cadastro/estado'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Link to={'/cadastro/cidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
               </Col>
               <CardBody>
                 <Table responsive striped>
@@ -71,16 +77,17 @@ class Estado extends Component {
                   <tr>
                   <th>Id</th>
                   <th>Nome</th>
-                  <th>Sigla</th>
+                  <th>Telefone</th>
+                  <th>Ação</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {this.renderEstados()}
+                  {this.renderAgendamentos()}
                   </tbody>
                 </Table>
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                  <PaginationItem active>
+                  <PaginationItem >
                     <PaginationLink tag="button">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
@@ -97,4 +104,4 @@ class Estado extends Component {
   }
 }
 
-export default Estado;
+export default Agendamento;

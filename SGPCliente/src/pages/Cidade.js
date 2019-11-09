@@ -18,10 +18,13 @@ class Estado extends Component {
   
   state = {
     cidades: [],
+    estado: "",
   }
+
   
+
   async componentDidMount() {
-    api.get('/api/cidade')
+    await api.get('/api/cidade')
       .then(response => {
         const { data } = response;
         this.setState({
@@ -32,8 +35,8 @@ class Estado extends Component {
         console.warn(err);
         alert(err.message)
       })
-  }
-
+    }
+  
   renderCidades = () => {
     const { cidades } = this.state;
     const cidadesItems = cidades.map((cidade) => {
@@ -45,13 +48,14 @@ class Estado extends Component {
               {}
           </Link>
           </td>
-          <td></td>
+          <td>{cidade.cidadeestado.nome}</td>
         </tr>
+        
       )
     });
     return cidadesItems;
   }
-
+  
 
   render() {
     return (
@@ -62,7 +66,9 @@ class Estado extends Component {
               <CardHeader>
                 <i> Listagem de Cidades</i>
               </CardHeader>
-              <Link to={'/cadastro/cidade'}><Button className="mr-1" color="success">Cadastrar</Button></Link>
+              <Col xs="4">
+              <Link to={'/cadastro/cidade'}><Button className="mr-1"  color="success">Cadastrar</Button></Link>
+              </Col>
               <CardBody>
                 <Table responsive striped>
                   <thead>
@@ -78,7 +84,7 @@ class Estado extends Component {
                 </Table>
                 <Pagination>
                   <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                  <PaginationItem active>
+                  <PaginationItem >
                     <PaginationLink tag="button">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
