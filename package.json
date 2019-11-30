@@ -5,7 +5,8 @@
   "main": "bin/www",
   "scripts": {
     "server": "npm run develop",
-    "start": "cross-env DEBUG=projeto:server node ./bin/www",
+    "start": "node app",
+    "start2": "cross-env DEBUG=projeto:server node ./bin/www",
     "develop": "cross-env DEBUG=projeto:server nodemon ./bin/www",
     "dev": "npm run server"
   },
