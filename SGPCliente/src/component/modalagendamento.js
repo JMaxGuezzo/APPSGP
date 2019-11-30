@@ -35,70 +35,70 @@ export default function ModalLocalvisita({ history, match }) {
     if (match.params.Id != null) {
       const response = await api.get('/api/agendamento/' + Parametro);
       console.log(response);
-      // setIdagendamento(response.data.id);
-      // setNomeagendalocal(response.data.agendalocal.nomelocal);
-      // setEnderecoagenda(response.data.agendalocal.endereco);
-      // setNumlocalagenda(response.data.agendalocal.numcasa);
-      // setBairroagenda(response.data.agendalocal.bairro);
-      // setNomepessoa(response.data.agendapessoa.nome);
-      // setTelefonepessoa(response.data.agendapessoa.telefone);
-      // setNometipo(response.data.agendatipo.nome); 
+      setIdagendamento(response.data.id);
+      setNomeagendalocal(response.data.agendalocal.nomelocal);
+      setEnderecoagenda(response.data.agendalocal.endereco);
+      setNumlocalagenda(response.data.agendalocal.numcasa);
+      setBairroagenda(response.data.agendalocal.bairro);
+      setNomepessoa(response.data.agendapessoa.nome);
+      setTelefonepessoa(response.data.agendapessoa.telefone);
+      setNometipo(response.data.agendatipo.nome); 
     }
-  //   await api.get('/api/cidade/')
-  //     .then(response => {
-  //       const { data } = response;
-  //       setCidade(data)
-  //     })
-  // };
+    await api.get('/api/cidade/')
+      .then(response => {
+        const { data } = response;
+        setCidade(data)
+      })
+  };
 
-  // async function PesquisaCidade() {
-  //   await api.get('/api/cidade/' + cidadeid)
-  //     .then(response => {
-  //       const { data } = response;
-  //       setCidadeNome(data.nome)
-  //     })
-  // }
-  // PesquisaCidade();
+  async function PesquisaCidade() {
+    await api.get('/api/cidade/' + cidadeid)
+      .then(response => {
+        const { data } = response;
+        setCidadeNome(data.nome)
+      })
+  }
+  PesquisaCidade();
 
-  // async function componentAll() {
-  //   if (match.params.Id != null) {
-  //     const responseAlter = await api.put('/api/localvisita/' + id, {
-  //       id,
-  //       nomelocal,
-  //       endereco,
-  //       numcasa,
-  //       bairro,
-  //       complemento,
-  //       telefone,
-  //       idcidade: cidadeid,
-  //     })
-  //     if (responseAlter.status === 200) {
-  //       alert("Local Alterado Com Sucesso");
-  //       toggle();
-  //     }
-  //   } else {
-  //     const responseAdd = await api.post('/api/localvisita/' + id, {
-  //       id,
-  //       nomelocal,
-  //       endereco,
-  //       numcasa,
-  //       bairro,
-  //       complemento,
-  //       telefone,
-  //       idcidade: cidadeid,
-  //     })
-  //     if (responseAdd.status === 201) {
-  //       alert("local Cadastrado com Sucesso.");
-  //       toggle();
-  //     }
-  //   }
-  // }
+  async function componentAll() {
+    if (match.params.Id != null) {
+      const responseAlter = await api.put('/api/localvisita/' + id, {
+        id,
+        nomelocal,
+        endereco,
+        numcasa,
+        bairro,
+        complemento,
+        telefone,
+        idcidade: cidadeid,
+      })
+      if (responseAlter.status === 200) {
+        alert("Local Alterado Com Sucesso");
+        toggle();
+      }
+    } else {
+      const responseAdd = await api.post('/api/localvisita/' + id, {
+        id,
+        nomelocal,
+        endereco,
+        numcasa,
+        bairro,
+        complemento,
+        telefone,
+        idcidade: cidadeid,
+      })
+      if (responseAdd.status === 201) {
+        alert("local Cadastrado com Sucesso.");
+        toggle();
+      }
+    }
+  }
 
   return (
     <Modal size="xl" onEnter={function () { componentDidMount(); }} isOpen={modal} toggle={toggle} >
       <ModalHeader toggle={toggle}>Local da Visita</ModalHeader>
       <ModalBody>
-        {/* <Form>
+        <Form>
           <Row>
             {grupoCampos(true, "2", "ID", "text", "ID", id, event => setIdagendamento(event.target.value))}
             {grupoCampos(false, "5", "Local", "text", "Nome do Local", nomeagendalocal, event => setNomeagendalocal(event.target.value))}
@@ -121,11 +121,11 @@ export default function ModalLocalvisita({ history, match }) {
               </Input>
             </Col>
           </Row>
-        </Form> */}
+        </Form>
       </ModalBody>
       <ModalFooter>
         <Button color="success">Salvar</Button>
       </ModalFooter>
     </Modal>
   );
-}}
+}

@@ -54,7 +54,10 @@ export default function ModalEstado({ history, match }) {
         sigla,
       })
       if (responseAdd.status === 201) {
-        Swal.fire('Sucesso!!', 'Estado cadastrado com sucesso', 'success');
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAdd.status +
+          ' <br> Estado cadastrado com sucesso', 'success');
+        toggle();
         toggle();
       }
     }

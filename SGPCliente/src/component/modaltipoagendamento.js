@@ -7,7 +7,8 @@ import { Modal,
     Button,
     Form,} from 'reactstrap';
     import api from './api';
-    import grupoCampos from './campos'
+    import grupoCampos from './campos';
+    import Swal from 'sweetalert2';
 
     export default function ModalTipoagendamento ({history, match}){  
     const [modal, setModal] = useState(true);

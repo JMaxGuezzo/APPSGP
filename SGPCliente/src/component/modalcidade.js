@@ -7,8 +7,9 @@ import { Modal,
     Row, 
     Button,
     Form, Input, Col, Label} from 'reactstrap';
-    import api from '../api.js';
-    import grupoCampos from '../campos';
+    import api from './api.js';
+    import grupoCampos from './campos';
+    import Swal from 'sweetalert2';
 
 export default function ModalCidade({ history, match }) {
   const [modal, setModal] = useState(true);
@@ -55,7 +56,10 @@ export default function ModalCidade({ history, match }) {
         estadoId: estadoid,
       })
       if (responseAlter.status === 200) {
-        alert("Cidade Alterada Com Sucesso");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAlter.status +
+          ' <br> Cidade alterada com sucesso', 'success');
+        toggle();
         toggle();
       }
     } else {
@@ -66,7 +70,10 @@ export default function ModalCidade({ history, match }) {
       })
 
       if (responseAdd.status === 201) {
-        alert("Cidade Cadastrada com Sucesso.");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAdd.status +
+          ' <br> Cidade Cadastrada com sucesso', 'success');
+        toggle();
         toggle();
       }
 }

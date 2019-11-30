@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import api from './api';
 import grupoCampos from './campos';
+import Swal from 'sweetalert2';
 
 export default function ModalLocalvisita({ history, match }) {
   const [modal, setModal] = useState(true);
@@ -68,7 +69,10 @@ export default function ModalLocalvisita({ history, match }) {
         idcidade: cidadeid,
       })
       if (responseAlter.status === 200) {
-        alert("Local Alterado Com Sucesso");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAlter.status +
+          ' <br> Lolal alterado com sucesso', 'success');
+        toggle();
         toggle();
       }
     } else {
@@ -83,7 +87,10 @@ export default function ModalLocalvisita({ history, match }) {
         idcidade: cidadeid,
       })
       if (responseAdd.status === 201) {
-        alert("local Cadastrado com Sucesso.");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAdd.status +
+          ' <br> Local alterado com sucesso', 'success');
+        toggle();
         toggle();
       }
     }

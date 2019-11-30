@@ -23,7 +23,7 @@ function listagem(request, response, next) {
           {
             model: Pessoa,
             as: 'agendapessoa',
-            attributes: ['nome', 'telefone',]
+            attributes: ['nome', 'telefone', 'idtipopessoa']
           },
           {
             model: LocalVisita,

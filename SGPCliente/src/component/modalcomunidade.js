@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import api from './api';
 import grupoCampos from './campos';
+import Swal from 'sweetalert2';
 
 export default function ModalComunidade({ history, match }) {
   const [modal, setModal] = useState(true);
@@ -55,7 +56,10 @@ export default function ModalComunidade({ history, match }) {
         idceb: cebid,
       })
       if (responseAlter.status === 200) {
-        alert("Comunidade Alterada Com Sucesso");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAlter.status +
+          ' <br> Comunidade alterada com sucesso', 'success');
+        toggle();
         toggle();
       }
     } else {
@@ -65,7 +69,10 @@ export default function ModalComunidade({ history, match }) {
         idceb: cebid
       })
       if (responseAdd.status === 201) {
-        alert("Comunidade Cadastrada com Sucesso.");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAdd.status +
+          ' <br> Comunidade cadastrada com sucesso', 'success');
+        toggle();
         toggle();
       }
     }

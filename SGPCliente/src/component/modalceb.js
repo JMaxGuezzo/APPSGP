@@ -7,7 +7,8 @@ import { Modal,
     Button,
     Form,} from 'reactstrap';
     import api from './api';
-    import grupoCampos from './campos'
+    import grupoCampos from './campos';
+    import Swal from 'sweetalert2';
 
     export default function ModalCeb ({history, match}){  
     const [modal, setModal] = useState(true);
@@ -32,7 +33,10 @@ import { Modal,
           nome,
     })
     if(responseAlter.status === 200){
-      alert("Ceb Alterada Com Sucesso");
+      Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAlter.status +
+          ' <br> Ceb alterada com sucesso', 'success');
+        toggle();
       toggle();
     }
   }else{
@@ -40,7 +44,10 @@ import { Modal,
       nome,
   })
   if(responseAdd.status === 201){
-    alert("Ceb Cadastrada com Sucesso.");
+    Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAdd.status +
+          ' <br> Ceb alterada com sucesso', 'success');
+        toggle();
     toggle();
   }
 }

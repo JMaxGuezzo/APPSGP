@@ -8,8 +8,9 @@ import { Modal,
    Input, Col, Label,
     Form, Button,} from 'reactstrap';
 
-    import api from '../api';
-    import Campos from '../campos'
+    import api from './api';
+    import Campos from './campos';
+    import Swal from 'sweetalert2';
 
 
     export default function Modalfunc ({history, match}){  
@@ -26,7 +27,7 @@ import { Modal,
     const [rg, setRg] = useState(''); 
     const [cpf, setCpf] = useState(''); 
     const [situacao, setSituacao] = useState('');
-    const [cidadeid, setCidadeid] = useState(''); 
+    const [idcidade, setCidadeid] = useState(''); 
     const [idcomunidade, setIdcomunidade] = useState(''); 
     const [idtipopessoa, setIdtipopessoa] = useState('');
     const [cidadenome, setCidadeNome] = useState(''); 
@@ -36,15 +37,17 @@ import { Modal,
     const [tipopessoanome, setTipoPessoaNome] = useState(''); 
     const [tipopessoa, setTipoPessoa] = useState([]); 
 
-     const toggle = () => setModal(!modal, history.push('/cadastros/Fiel') );
+     const toggle = () => setModal(!modal, history.push('/listagem/pessoa') );
 
      async function componentDidMount() { 
-       var t;
+       var cidadeid;
+       var comunidadeid;
+       var tipopessoaid;
       const Parametro = match.params.Id;
+      if(Parametro != null){
       await api.get('/api/pessoa/'+ Parametro)
       .then(responseNomeCidade => {
         const { data } = responseNomeCidade;
-        console.log(data.idcidade);
       setId(data.id);
       setNome(data.nome);
       setDatanasc(data.datanasc);
@@ -56,62 +59,63 @@ import { Modal,
       setComplemento(data.complemento);
       setRg(data.rg);
       setCpf(data.cpf);
-      t=data.idcidade;
       setCidadeid(data.idcidade);
       setIdcomunidade(data.idcomunidade);
       setIdtipopessoa(data.idtipopessoa);
       setSituacao(data.situacao);
+
+      cidadeid=data.idcidade;
+      comunidadeid=data.idcomunidade;
+      tipopessoaid=data.idtipopessoa;
       });
-      await api.get('/api/cidade/' + t)
+
+      await api.get('/api/cidade/' + cidadeid)
       .then(responseNomeCidade => {
       const { data } = responseNomeCidade;
       setCidadeNome(data.nome)
     })
 
-     await api.get('/api/cidade/')
-      .then(responseAllCidade => {
-      const { data } = responseAllCidade;
-      setCidade(data)
-    })
-    }; 
-
-function PreencheTopDown() {
-   console.log(cidadeid)
-     
-
-     api.get('/api/comunidade/' + idcomunidade)
+    await api.get('/api/comunidade/' + comunidadeid)
       .then(responseIdComunidade => {
       const { data } = responseIdComunidade;
       setComunidadeNome(data.nome)
     })
 
-     api.get('/api/comunidade/')
-      .then(responseAllComunidade => {
-      const { data } = responseAllComunidade;
-      setComunidade(data)
-    })
-
-     api.get('/api/tipopessoa/' + idtipopessoa)
+    await api.get('/api/tipopessoa/' + tipopessoaid)
       .then(responseIdTipoPessoa => {
       const { data } = responseIdTipoPessoa;
       setTipoPessoaNome(data.nome)
     })
 
-     api.get('/api/tipopessoa/')
+  }
+     await api.get('/api/cidade/')
+      .then(responseAllCidade => {
+      const { data } = responseAllCidade;
+      setCidade(data)
+    })
+
+    await api.get('/api/comunidade/')
+      .then(responseAllComunidade => {
+      const { data } = responseAllComunidade;
+      setComunidade(data)
+    })
+
+
+    await api.get('/api/tipopessoa/')
       .then(responseAllTipoPessoa => {
       const { data } = responseAllTipoPessoa;
       setTipoPessoa(data)
     })
-  }
+    }; 
+
 
   async function componentAll() {
     if (match.params.Id != null) {
       const responseAlter = await api.put('/api/pessoa/' + id, {
-        id, 
         nome, 
         datanasc, 
         endereco, 
-        numero, 
+        numcasa: numero, 
         bairro, 
         telefone,  
         celular, 
@@ -119,27 +123,23 @@ function PreencheTopDown() {
         rg, 
         cpf, 
         situacao,
-        idcidade: cidadeid, 
+        idcidade, 
         idcomunidade, 
         idtipopessoa, 
-        cidadenome,  
-        cidade, 
-        comunidadenome, 
-        comunidade,
-        tipopessoanome,
-        tipopessoa,
       })
       if (responseAlter.status === 200) {
-        alert("Pessoa Alterada Com Sucesso");
+        Swal.fire('Sucesso!!',
+          '<strong>Status: </strong>' + responseAlter.status +
+          ' <br>' + tipopessoanome + ' alterado com sucesso', 'success');
+        toggle();
         toggle();
       }
     } else {
-      const responseAdd = await api.post('/api/pessoa/' + id, {
-        id, 
+      const responseAdd = await api.post('/api/pessoa/', {
         nome, 
         datanasc, 
         endereco, 
-        numero, 
+        numcasa: numero, 
         bairro, 
         telefone,  
         celular, 
@@ -147,15 +147,9 @@ function PreencheTopDown() {
         rg, 
         cpf, 
         situacao,
-        idcidade: cidadeid, 
+        idcidade, 
         idcomunidade, 
         idtipopessoa, 
-        cidadenome,  
-        cidade, 
-        comunidadenome, 
-        comunidade,
-        tipopessoanome,
-        tipopessoa,
       })
       if (responseAdd.status === 201) {
         alert("Pessoa Cadastrada com Sucesso.");
@@ -163,9 +157,8 @@ function PreencheTopDown() {
       }
     }
   }
-
     return(
-      <Modal size="xl" onEnter={function (){componentDidMount()}} onEntering={function (){}} isOpen={modal} toggle={toggle} >
+      <Modal size="xl" onEnter={function (){componentDidMount()}} isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Fiel</ModalHeader>
           <ModalBody>
             <Form>
@@ -189,7 +182,7 @@ function PreencheTopDown() {
               <Col xs="4">
               <Label>Cidade</Label>
               <Input type="select" name="select" onChange={event => setCidadeid(event.target.value)}>
-                <option value={cidadeid}>{cidadenome}</option>
+                <option value={idcidade}>{cidadenome}</option>
                 {cidade.map(list => (
                   <option key={list.id} value={list.id}>
                     {list.nome}
@@ -219,11 +212,13 @@ function PreencheTopDown() {
                   </option>
                 ))}
               </Input>
-            </Col>
-                 
-                 </Row>
               
-              {Campos(false, "2","Situação", "text", "Situação", situacao, event => setRg(situacao === "A" ? "Ativo" : "Inativo"))}
+            </Col>
+
+            {Campos(false, "2","Situação", "text", "Situação", situacao, event => setSituacao(event.target.value))} 
+            </Row>
+            
+              
              
             </Form>
           </ModalBody>
