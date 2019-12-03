@@ -10,6 +10,7 @@ const ceb = React.lazy(()=> import('./pages/Ceb'));
 const tipoagendamento = React.lazy(()=> import('./pages/Tipoagendamento'));
 const localvisita = React.lazy(()=> import('./pages/Localvisita'));
 const agendamento = React.lazy(()=> import('./pages/Agendamento'));
+const parcelasdizimo = React.lazy(()=> import('./pages/Parcelasdizimo'));
 
 const modalPessoa = React.lazy(()=> import('./component/modalpessoa'));
 const modalEstado = React.lazy(()=> import('./component/modalestado'));
@@ -57,6 +58,8 @@ const routes = [
   { path: '/cadastro/agendamento/', exact:true, component: modalAgendamento},
   { path: '/listagem/agendamento/', exact:true, component: agendamento },
   { path: '/listagem/agendamento/:id', exact:true, component: modalAgendamento },
+
+  { path: '/listagem/parcelasdizimo/', exact:true, component: parcelasdizimo },
 ];
 
 export default routes;

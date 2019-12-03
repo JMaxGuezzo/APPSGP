@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-
+import InputMask from 'react-input-mask';
 import { Modal, 
     ModalBody, 
     ModalFooter, 
     ModalHeader, 
     Row, 
    Input, Col, Label,
-    Form, Button,} from 'reactstrap';
+    Form, Button, FormGroup} from 'reactstrap';
 
     import api from './api';
     import Campos from './campos';
     import Swal from 'sweetalert2';
+    const validarCpf = require('validar-cpf');
+   
 
 
     export default function Modalfunc ({history, match}){  
@@ -110,7 +112,9 @@ import { Modal,
 
 
   async function componentAll() {
+    
     if (match.params.Id != null) {
+      if(validarCpf(cpf) == true){
       const responseAlter = await api.put('/api/pessoa/' + id, {
         nome, 
         datanasc, 
@@ -132,9 +136,14 @@ import { Modal,
           '<strong>Status: </strong>' + responseAlter.status +
           ' <br>' + tipopessoanome + ' alterado com sucesso', 'success');
         toggle();
-        toggle();
       }
+    }else{
+      Swal.fire('Erro!!',
+          '<strong>Status: </strong>'+
+          ' <br> CPF ' + cpf + ' invalido por favor verifique!!', 'error');
+    }
     } else {
+      if(validarCpf(cpf) == true && nome != "" && rg != ""){
       const responseAdd = await api.post('/api/pessoa/', {
         nome, 
         datanasc, 
@@ -154,8 +163,13 @@ import { Modal,
       if (responseAdd.status === 201) {
         alert("Pessoa Cadastrada com Sucesso.");
         toggle();
+      }else if(responseAdd.status === 422){
+        alert("Nao foi possivel cadastrar!! <br> Nome: "+ nome+ " ja esta cadastrado");
       }
+    }else{
+      alert("CPF invalido");
     }
+  }
   }
     return(
       <Modal size="xl" onEnter={function (){componentDidMount()}} isOpen={modal} toggle={toggle} >
@@ -163,11 +177,11 @@ import { Modal,
           <ModalBody>
             <Form>
               <Row>
-                {Campos(true, "1","ID", "text", "ID", id, event => setId(event.target.value))}
+              {Campos(true, "1","ID", "text", "ID", id, event => setId(event.target.value))}
                 {Campos(false, "3", "Nome", "text", "Digite Seu Nome..", nome, event => setNome(event.target.value))}  
                 {Campos(false, "2","Data Nascimento", "date", "__/__/___", datanasc, event => setDatanasc(event.target.value))}
-                {Campos(false, "2","Telefone", "text", "__/__/___", telefone, event => setTelefone(event.target.value))}
-                {Campos(false, "2","Celular", "text", "__/__/___", celular,  event => setCelular(event.target.value))}
+                {Campos(false, "2","Telefone", "text", "", telefone, event => setTelefone(event.target.value))}
+                {Campos(false, "2","Celular", "text", "", celular,  event => setCelular(event.target.value))}
               </Row>
               <Row>
                 {Campos(false, "4","Endereco", "text", "Digite seu endereco", endereco, event => setEndereco(event.target.value))}
@@ -177,8 +191,12 @@ import { Modal,
               </Row>
               <Row>
                 {Campos(false, "3","RG", "text", "RG", rg, event => setRg(event.target.value))}
-                {Campos(false, "3", "CPF", "text", "CPF", cpf, event => setCpf(event.target.value))}   
-              
+                <Col xs="2">
+                <FormGroup>
+                <Label>CPF:</Label>
+                <InputMask type="text" mask="999.999.999-99" placeholder="___.___.___-__" value={cpf} onChange={event => setCpf(event.target.value)}></InputMask>
+               </FormGroup>
+               </Col>
               <Col xs="4">
               <Label>Cidade</Label>
               <Input type="select" name="select" onChange={event => setCidadeid(event.target.value)}>

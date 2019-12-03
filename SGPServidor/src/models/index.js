@@ -30,10 +30,12 @@ const Estado = sequelize.define('estado', {
     nome: {
       type: Sequelize.STRING(500),
       allowNull: false,
+      unique: 'compositeIndex',
     },
     sigla: {
       type: Sequelize.STRING(500),
       allowNull: false,
+      unique: 'compositeIndex',
     },
   });
 
@@ -46,6 +48,7 @@ const TipoPessoa = sequelize.define('tipopessoa', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
 });
 
@@ -58,6 +61,7 @@ const TipoAgendamento = sequelize.define('tipoagendamento', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
 });
 
@@ -70,6 +74,7 @@ const TipoMovimento = sequelize.define('tipomovimento', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
 });
 
@@ -82,9 +87,9 @@ const Ceb = sequelize.define('ceb', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     }
 });
-
 
 const Comunidade = sequelize.define('comunidade', {
   id: {
@@ -95,6 +100,7 @@ const Comunidade = sequelize.define('comunidade', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
   idceb: {
     type: Sequelize.INTEGER,
@@ -113,6 +119,7 @@ const Cidade = sequelize.define('cidade', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
   estadoId: {
     type: Sequelize.INTEGER,
@@ -168,6 +175,7 @@ const Pessoa = sequelize.define('pessoa', {
   nome: {
     type: Sequelize.STRING(500),
     allowNull: false,
+    unique: 'compositeIndex',
     },
   datanasc: {
     type: Sequelize.DATE,
@@ -194,9 +202,11 @@ const Pessoa = sequelize.define('pessoa', {
     },
   rg: {
     type: Sequelize.STRING(500),
+    unique: 'compositeIndex',
     },
   cpf: {
     type: Sequelize.STRING(500),
+    unique: 'compositeIndex',
     },
   celular: {
     type: Sequelize.STRING(500),
@@ -257,6 +267,28 @@ const Agendamento = sequelize.define('agendamento', {
     }
 });
 
+const ParcelasDizimo = sequelize.define('parcelasdizimo', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.BIGINT,
+    autoIncrement: true,
+    },
+  idpessoa: {
+    type: Sequelize.INTEGER,
+    references: { model: 'pessoa', key: 'id' },
+    onDelete: 'CASCADE',
+    allowNull: false,
+    },
+    valor: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    datapgto: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      }
+});
+
 //Relacionamentos
 Comunidade.belongsTo(Ceb, {
   foreignKey: 'idceb',
@@ -303,6 +335,11 @@ Agendamento.belongsTo(TipoAgendamento, {
   as: 'agendatipo'
 });
 
+ParcelasDizimo.belongsTo(Pessoa, {
+  foreignKey: 'idpessoa',
+  as: 'pessoa',
+});
+
 module.exports = {
     sequelize,
     Comunidade,
@@ -314,5 +351,6 @@ module.exports = {
     TipoMovimento,
     LocalVisita,
     Pessoa,
-    Agendamento
+    Agendamento,
+    ParcelasDizimo
 };

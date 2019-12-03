@@ -14,7 +14,7 @@ const tipopessoa = require('./tipopessoa');
 const tipoagendamento = require('./tipoagendamento');
 const localvisita = require('./localvisita');
 const agendamento = require('./agendamento');
-//const tipomovimento = require('./estado');
+const parcelasdizimo = require('./parcelasdizimo');
 
 
 router.use('/pessoa', pessoa);
@@ -26,6 +26,6 @@ router.use('/estado', estado);
 router.use('/tipoagendamento', tipoagendamento);
 router.use('/localvisita', localvisita);
 router.use('/agendamento', agendamento);
-//router.use('/tipomovimento', tipomovimento);
+router.use('/parcelasdizimo', parcelasdizimo);
 
 module.exports = router;

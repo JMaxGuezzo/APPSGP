@@ -70,7 +70,7 @@ export default {
       },
       {
         name: 'Dizimo',
-        url: '/listagem/agendamento/',
+        url: '/listagem/parcelasdizimo/',
         icon: 'cui-dollar',
         badge: {
           variant: 'info',
