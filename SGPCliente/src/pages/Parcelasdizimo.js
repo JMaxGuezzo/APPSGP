@@ -14,10 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import api from '../component/api';
 import Swal from 'sweetalert2';
-import { 
-  parseISO,
-  format,
-} from 'date-fns';
+import moment from 'moment';
 
 
 
@@ -58,13 +55,12 @@ export default function Parcelasdizimo ({history}) {
     var data;
     const parcelasdizimosItems = allparcelas.map((parcelasdizimo) => {
       {if(parcelasdizimo.pessoa.id == codigofiel && nomefiel == parcelasdizimo.pessoa.nome){
+        data = moment(parcelasdizimo.datapgto).format('DD-MM-YYYY');
       return (
         <tr key={parcelasdizimo.id}>
           <td>{parcelasdizimo.id}</td>
           <td>
-          <Link to={'/listagem/cidade/' + parcelasdizimo.id}>
-              {""+format(parcelasdizimo.datapgto, 'yyyy mm dd')}
-          </Link>
+              {data}
           </td>
           <td>{parcelasdizimo.valor}</td>
           <td><button>Deletar</button></td>
@@ -86,14 +82,10 @@ export default function Parcelasdizimo ({history}) {
       response = await api.post('/api/parcelasdizimo/',{
         idpessoa: codigofiel,
         valor:resultado, 
-        datapgto: format(parseISO(datapgto), 'yyyy mm dd', 'HH:mm')
-        
-
+        datapgto: moment(datapgto).format('YYYY MM DD'),
     }).catch( function add() {
       if(response.status === 201){
-          Swal.fire('Sucesso!!',
-        '<strong>Status: </strong>' + response.status +
-        ' <br> Parcela Lançada com sucesso', 'success')
+          alert("Cadastrado com sucesso!!");
         setqntdparcelas("");
         setvalor("");
         setcodigofiel("");

@@ -7,11 +7,12 @@ import { Modal,
     Row, 
    Input, Col, Label,
     Form, Button, FormGroup} from 'reactstrap';
-
+    import moment from 'moment';
     import api from './api';
     import Campos from './campos';
     import Swal from 'sweetalert2';
     const validarCpf = require('validar-cpf');
+    
    
 
 
@@ -45,11 +46,12 @@ import { Modal,
        var cidadeid;
        var comunidadeid;
        var tipopessoaid;
+       var convertdata;
       const Parametro = match.params.Id;
       if(Parametro != null){
       await api.get('/api/pessoa/'+ Parametro)
-      .then(responseNomeCidade => {
-        const { data } = responseNomeCidade;
+      .then(response => {
+        const { data } = response;
       setId(data.id);
       setNome(data.nome);
       setDatanasc(data.datanasc);
@@ -65,7 +67,8 @@ import { Modal,
       setIdcomunidade(data.idcomunidade);
       setIdtipopessoa(data.idtipopessoa);
       setSituacao(data.situacao);
-
+      convertdata = moment(data.datanasc).format('DD/MM/YYYY');
+      setDatanasc(convertdata);
       cidadeid=data.idcidade;
       comunidadeid=data.idcomunidade;
       tipopessoaid=data.idtipopessoa;
@@ -110,11 +113,11 @@ import { Modal,
     })
     }; 
 
-
+console.log(moment(new Date()));
   async function componentAll() {
-    
+    const convert = moment(datanasc).format('YYYY-MM-DD');
     if (match.params.Id != null) {
-      if(validarCpf(cpf) == true){
+      if(validarCpf(cpf) == true ){
       const responseAlter = await api.put('/api/pessoa/' + id, {
         nome, 
         datanasc, 
@@ -178,8 +181,15 @@ import { Modal,
             <Form>
               <Row>
               {Campos(true, "1","ID", "text", "ID", id, event => setId(event.target.value))}
-                {Campos(false, "3", "Nome", "text", "Digite Seu Nome..", nome, event => setNome(event.target.value))}  
-                {Campos(false, "2","Data Nascimento", "date", "__/__/___", datanasc, event => setDatanasc(event.target.value))}
+                {Campos(false, "3", "Nome", "text", "Digite Seu Nome..", nome, event => setNome(event.target.value))}
+
+                <Col xs="2">
+                <FormGroup>
+                <Label>Data de Nascimento</Label>
+                <InputMask type="text" mask="99/99/9999" placeholder="___/___/___" value={datanasc} onChange={event => setDatanasc(event.target.value)}></InputMask>
+               </FormGroup>
+               </Col>
+
                 {Campos(false, "2","Telefone", "text", "", telefone, event => setTelefone(event.target.value))}
                 {Campos(false, "2","Celular", "text", "", celular,  event => setCelular(event.target.value))}
               </Row>

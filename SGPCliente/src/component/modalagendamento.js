@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
+import moment from 'moment';
 import {
   Modal,
   ModalBody,
@@ -6,7 +8,7 @@ import {
   ModalHeader,
   Row,
   Button,
-  Form, Input, Col, Label
+  Form, Input, Col, Label, FormGroup,
 } from 'reactstrap';
 import api from './api';
 import grupoCampos from './campos';
@@ -24,6 +26,8 @@ export default function ModalAgendamento({ history, match }) {
   const [idpessoa, setIDPessoa] = useState('');
   const [idlocalvisita, setIDlocalvisita] = useState('');
   const [idtipoagendamento, setIDTipoAgendamento] = useState('');
+  const [dataagenda, setDataagenda] = useState('');
+  const [hora, setHoraagenda] = useState('');
 
   const [nomeAgendaPessoa, setnomeAgendaPessoa] = useState('');
   const [telefoneAgendaPessoa, settelefoneAgendaPessoa] = useState('');
@@ -43,13 +47,6 @@ export default function ModalAgendamento({ history, match }) {
   const [alllocalvisita, setalllocalvisita] = useState([]);
   const [alltipoAgendamento, setalltipoAgendamento] = useState([]);
 
-
-
-
-
-
-
-
   const toggle = () => setModal(!modal, history.push('/listagem/agendamento/'));
 
   async function componentDidMount() {
@@ -57,12 +54,16 @@ export default function ModalAgendamento({ history, match }) {
     var localvisita; 
     var tipoagendamento;
     var Parametro = match.params.id;
+    var converter;
+    var arrumarHora;
     if (match.params.id != null) {
       const response = await api.get('/api/agendamento/' + Parametro);
 
       setIDagendamento(response.data.id);
       setdescricao(response.data.descricao);
       setIDsacerdote(response.data.idsacerdote);
+      setDataagenda(response.data.dataagenda);
+      setHoraagenda(response.data.hora)
 
       setIDPessoa(response.data.agendapessoa.idpessoa);
       setIDlocalvisita(response.data.agendalocal.idlocalvisita);
@@ -81,6 +82,12 @@ export default function ModalAgendamento({ history, match }) {
       pessoa = response.data.agendapessoa.id;
       localvisita = response.data.agendalocal.id;
       tipoagendamento = response.data.agendalocal.id;
+      
+      converter = moment(response.data.dataagenda).format('DD/MM/YYYY');
+      setDataagenda(converter);
+
+      arrumarHora = moment(response.data.hora).format('HH:mm');
+      setHoraagenda(arrumarHora);
 
       await api.get('/api/pessoa/' + pessoa)
       .then(response => {
@@ -122,13 +129,16 @@ export default function ModalAgendamento({ history, match }) {
   
 
   async function componentAll() {
+    var parametro = match.params.id;
     if (match.params.id != null) {
-      const responseAlter = await api.put('/api/agendamento/1', {
+      const responseAlter = await api.put('/api/agendamento/' + parametro , {
         idpessoa,
         idlocalvisita,
         idtipoagendamento,
         idsacerdote,
         descricao,
+        dataagenda,
+        hora,
       })
       if(responseAlter.status === 200){
         Swal.fire('Sucesso!!',
@@ -144,6 +154,8 @@ export default function ModalAgendamento({ history, match }) {
         idtipoagendamento,
         idsacerdote,
         descricao,
+        dataagenda,
+        hora,
       })
       if(responseAdd.status === 201){
         Swal.fire('Sucesso!!',
@@ -211,6 +223,19 @@ export default function ModalAgendamento({ history, match }) {
                 ))}
               </Input>
             </Col>
+
+            <Col xs="2">
+                <FormGroup>
+                <Label>Data Agendamento: </Label>
+                <InputMask type="text" mask="99/99/9999" placeholder="___/___/___" value={dataagenda} onChange={event => setDataagenda(event.target.value)}></InputMask>
+               </FormGroup>
+               </Col>
+               <Col xs="2">
+                <FormGroup>
+                <Label>Hora Agendamento: </Label>
+                <InputMask type="text" mask="99:99" placeholder="__:__" value={hora} onChange={event => setHoraagenda(event.target.value)}></InputMask>
+               </FormGroup>
+               </Col>
           </Row>
           <Row>
           <Col xs="12">

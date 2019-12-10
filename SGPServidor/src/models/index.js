@@ -262,6 +262,14 @@ const Agendamento = sequelize.define('agendamento', {
     type: Sequelize.INTEGER,
     allowNull: false,
     },
+    dataagenda: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      },
+    hora: {
+      type: Sequelize.STRING(500),
+      allowNull: true,
+        },
   descricao: {
     type: Sequelize.STRING(500),
     }
